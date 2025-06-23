@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Training Diffusion Models from Scratch without Datasets via Dynamic Iterative Distillation and Partially Uniform Re-Diffusion">
+  <meta name="keywords" content="DKDM-Plus, Diffusion Models, Image Generation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DKDM-Plus</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+<!-- 
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Training Diffusion Models from Scratch without Datasets via Dynamic Iterative Distillation and Partially Uniform Re-Diffusion</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Qianlong Xiang<sup>1</sup>,</span>
+            <span class="author-block">Miao Zhang<sup>1,†</sup>,</span>
+            <span class="author-block">Kun Wang<sup>2</sup>,</span>
+            <span class="author-block">Haoyu Zhang<sup>1</sup>,</span>
+            <span class="author-block">Weili Guan<sup>1</sup>,</span>
+            <span class="author-block">Liqiang Nie<sup>1,†</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Harbin Institute of Technology (Shenzhen),</span>
+            <span class="author-block"><sup>2</sup>Shandong University</span>
+            <br>
+            <span class="author-block"><sup>†</sup>Corresponding author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Arxiv Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark" style="pointer-events: none; opacity: 0.5;">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>ArXiv (soon)</span>
+                </a>
+              </span>
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark" style="pointer-events: none; opacity: 0.5;">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>PDF (soon)</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark" style="pointer-events: none; opacity: 0.5;">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (soon)</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section abstract-section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+
+            Diffusion models (DMs) have demonstrated exceptional generative capabilities across various domains, including image, video, and so on.
+            A key factor contributing to their effectiveness is the high quantity and quality of data used during training.
+            However, the training of mainstream DMs now consumes increasingly large amounts of data, e.g., training a Stable Diffusion model requires billions of image-text pairs.
+            This enormous data requirement poses significant challenges for training large DMs due to high data acquisition costs and storage expenses.
+
+            To alleviate the data burden, recent studies have explored fine-tuning DMs in a data-free manner, while which remain insufficient for training new DMs from scratch.
+            In this paper, we systematically address this challenge and make four main contributions.
+            First, we introduce a novel task scenario termed <strong>D</strong>ata-Free <strong>K</strong>nowledge Distillation for <strong>D</strong>iffusion <strong>M</strong>odels (<strong>DKDM</strong>), wherein the generative capabilities of DMs are transferred to new models without access to original data.
+            Second, by designing a dedicated objective function, we theoretically demonstrate the feasibility of DKDM, which enables the training of new diffusion models from scratch via knowledge distillation in a data-free setting.
+            Third, we propose a <strong>D</strong>ynamic <strong>ITER</strong>ative <strong>D</strong>istillation (<strong>DITERD</strong>) method, which efficiently extracts diverse knowledge from existing DMs, enabling direct retrieval of training data without the need for a prolonged generative process.
+            Finally, we introduce a <strong>P</strong>artially <strong>U</strong>niform <strong>RE</strong>-diffusion (<strong>PURE</strong>) strategy to further enhance the effectiveness and efficiency of DITERD, which leverages advanced samplers to extract knowledge from existing DMs with fewer sampling steps while still enabling student models to learn from the entire diffusion steps.
+            To the best of our knowledge, this work represents the first systematic study of data-free training of diffusion models.
+            Experimental results demonstrate that our data-free approach achieves competitive performance on pixel-space, latent-space, and text-to-image generation tasks, rivaling models trained on complete datasets.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- TLDR. -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="tldr-card">
+          <h2 class="title is-3 has-text-centered">TL;DR</h2>
+          <div class="content has-text-justified">
+          <ul>
+            <li><strong>Motivation</strong>: Training diffusion models (DMs) demands massive, high-quality datasets, resulting in prohibitive data acquisition and storage costs. This escalating data requirement hinders the scalability and accessibility of large-scale generative models.</li>
+            <li><strong>Core Challenge</strong>: How can we train new diffusion models from scratch without any access to original datasets, while ensuring both architectural flexibility and high-quality generative performance—overcoming the limitations of prior data-free or distillation-based approaches?</li>
+            <li><strong>Our Contributions</strong>
+              <ul>
+                <li>We introduce Data-Free Knowledge Distillation for Diffusion Models (DKDM), a novel paradigm enabling the training of diffusion models entirely without datasets by leveraging pretrained DMs as the knowledge source.</li>
+                <li>We propose Dynamic ITERative Distillation (DITERD) and the Partially Uniform RE-diffusion (PURE) strategy, which together facilitate efficient, flexible, and high-quality knowledge transfer from teacher to student models.</li>
+                <li>Extensive experiments demonstrate that our data-free approach achieves competitive performance across multiple generative tasks, rivaling models trained with full datasets.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="has-text-centered">
+            <div class="figure-container">
+              <img src="./static/images/generation.gif" alt="generation">
+              <div class="figure-caption">
+                <strong>Generation Results:</strong> Images generated by existing models and our train-from-scratch smaller models without datasets. Text conditioning in text-to-image generation: 1) <em>"a sandwich in a plastic food basket on a table"</em> and 2) <em>"A living room has a couch, chair, fireplace, windows, and a potted plant."</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ TLDR. -->
+
+    <!-- Method -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Method</h2>
+        <div class="figure-container">
+          <img src="./static/images/DITERD.png" alt="DITERD" style="width: 100%;"/>
+          <div class="figure-caption">
+            <strong>DITERD Method:</strong> <em>Dynamic ITERative Distillation</em> - An enlarged batch set is initially constructed by sampling from a Gaussian distribution. Next, shuffle denoise is applied, wherein each sample is denoised random times. A batch is then randomly selected from this enlarged set for training the student with the denoised results substituting for their counterparts in the batch set. This process is repeated iteratively.
+          </div>
+        </div>
+        <br>
+        <div class="figure-container">
+          <img src="./static/images/PURE.png" alt="PURE" style="width: 80%;"/>
+          <div class="figure-caption">
+            <strong>PURE Strategy:</strong> <em>Partially Uniform RE-diffusion</em> - Incorporating advanced samplers into DITERD method. PURE enables knowledge extraction from existing DMs with fewer sampling steps while still enabling student models to learn from the entire diffusion steps.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Method -->
+
+    <!-- Results -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Results</h2>
+        <div class="results-section">
+          <div class="has-text-centered" style="margin-bottom: 1rem;">
+            <p style="color: #5a6c7d; font-size: 0.9rem; font-style: italic;">
+              <i class="fas fa-info-circle" style="margin-right: 0.5rem; color: #667eea;"></i>
+              Click the tabs below to switch between different result views
+            </p>
+          </div>
+          <div class="tabs is-centered is-boxed">
+            <ul>
+              <li class="is-active" data-tab="overall">
+                <a>
+                  <span>Overall Comparison</span>
+                </a>
+              </li>
+              <li data-tab="detailed">
+                <a>
+                  <span>Detailed Comparison</span>
+                </a>
+              </li>
+              <li data-tab="visual">
+                <a>
+                  <span>Visual Results</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        
+        <div id="overall" class="tab-content is-active">
+          <div class="figure-container">
+            <img src="./static/images/radar.png" alt="Overall comparison radar chart" style="width: 60%;"/>
+            <div class="figure-caption">
+              <strong>Overall Performance Comparison:</strong> Radar chart showing comprehensive performance metrics across different evaluation dimensions. Our data-free approach achieves competitive results compared to models trained with full datasets.
+            </div>
+          </div>
+        </div>
+        
+        <div id="detailed" class="tab-content" style="display: none;">
+          <div class="figure-container" style="margin-bottom: 2rem;">
+            <img src="./static/images/pixel.png" alt="Pixel-space comparison" style="width: 100%;"/>
+            <div class="figure-caption">
+              <strong>Pixel-Space Generation:</strong> Quantitative comparison on pixel-space diffusion models showing FID and IS scores across different datasets.
+            </div>
+          </div>
+          
+          <div class="figure-container" style="margin-bottom: 2rem;">
+            <img src="./static/images/latent.png" alt="Latent-space comparison" style="width: 100%;"/>
+            <div class="figure-caption">
+              <strong>Latent-Space Generation:</strong> Performance evaluation on latent diffusion models demonstrating competitive results in various metrics.
+            </div>
+          </div>
+          
+          <div class="figure-container">
+            <img src="./static/images/text-to-image.png" alt="Text-to-image comparison" style="width: 50%;"/>
+            <div class="figure-caption">
+              <strong>Text-to-Image Generation:</strong> Comprehensive evaluation on text-conditioned image generation tasks showing comparable quality to dataset-trained models.
+            </div>
+          </div>
+        </div>
+        
+        <div id="visual" class="tab-content" style="display: none;">
+          <div class="figure-container">
+            <img src="./static/images/demo.png" alt="Visual results demo" style="width: 100%;"/>
+            <div class="figure-caption">
+              <strong>Visual Results Demonstration:</strong> Qualitative comparison showcasing the visual quality of images generated by our data-free approach versus models trained on complete datasets. The results demonstrate comparable visual fidelity and diversity.
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Results -->
+
+    <!-- Conclusion -->
+    <section class="section conclusion-section">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3 has-text-centered">Conclusion</h2>
+          <div class="content has-text-justified">
+            <p>
+              In this paper, we investigate the feasibility of training diffusion models from scratch without access to any original dataset, aiming to address the increasing costs and storage challenges associated with large-scale data requirements in diffusion model training.
+              To this end, we propose a novel DKDM objective and introduce two methods: dynamic iterative distillation and partially uniform re-diffusion.
+              Extensive experiments on seven datasets demonstrate that our approach achieves competitive performance, rivaling mainstream diffusion models trained with full access to original data. To the best of our knowledge, this is the first study on data-free diffusion model training from scratch.
+              We believe our findings can pave the way for reducing data acquisition costs and relieving data privacy concerns in diffusion model training.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--/ Conclusion -->
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title">BibTeX</h2>
+        <div class="content">
+          <pre><code>@article{xiang2024dkdmplus,
+  author    = {Xiang, Qianlong and Zhang, Miao and Wang, Kun and Zhang, Haoyu and Guan, Weili and Nie, Liqiang},
+  title     = {Training Diffusion Models from Scratch without Datasets via Dynamic Iterative Distillation and Partially Uniform Re-Diffusion},
+  journal   = {arXiv preprint},
+  year      = {2025},
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- <footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer> -->
+
+</body>
+</html>

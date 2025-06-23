@@ -1,0 +1,614 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background: #fafafa;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+/* 统一的 Section 样式 */
+.section {
+  padding: 3rem 0;
+  margin: 0;
+  background: white;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+/* Hero section 保持特殊样式 */
+.hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-bottom: none;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+}
+
+.hero .title {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero .publication-authors {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* 移除Abstract section的特殊样式，保持统一 */
+.abstract-section {
+  background: white;
+  border-left: none;
+}
+
+/* 标题统一样式 */
+.title.is-3 {
+  /*
+  在这里调整 "Abstract", "TL;DR", "Conclusion" 等标题的字号
+  例如: font-size: 2.2rem;
+  */
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.title.is-3::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 2px;
+  background: #667eea;
+  margin: 1rem auto 0;
+}
+
+/* 移除TLDR特殊卡片，使用统一样式 */
+.tldr-card {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.tldr-card::before {
+  display: none;
+}
+
+/* 内容区域简化 */
+.content {
+  /*
+  在这里可以统一调整正文内容的字号, 例如 Abstract, Conclusion 的段落。
+  例如: font-size: 1.1rem;
+  */
+  background: white;
+  font-size: 1.2rem;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  margin-bottom: 1.5rem;
+}
+
+/* 按钮简化但保持美观 */
+.button {
+  border-radius: 20px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button::before {
+  display: none;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 图片和caption的统一容器设计 */
+.figure-container {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.figure-container:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+  border-color: rgba(102, 126, 234, 0.2);
+}
+
+.figure-container img {
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0;
+}
+
+/* 对于有特殊宽度设置的图片，允许它们保持原有样式 */
+.figure-container img[style*="width"] {
+  width: inherit;
+}
+
+.figure-container img:hover {
+  transform: scale(1.01);
+}
+
+/* 新的图片caption样式 - 更紧密地连接到图片 */
+.figure-caption {
+  margin: 1rem auto 0;
+  padding: 1rem 0;
+  background: none;
+  border: none;
+  border-top: 2px solid #f1f3f4;
+  border-radius: 0;
+  font-size: 0.8rem;
+  color: #5a6c7d;
+  line-height: 1.5;
+  text-align: justify;
+  text-align-last: center;
+  max-width: 90%;
+}
+
+.figure-caption strong {
+  color: #2c3e50;
+  display: inline-block;
+  margin-bottom: 0.3rem;
+}
+
+.figure-caption em {
+  font-style: italic;
+  color: #667eea;
+}
+
+/* 对于单独使用的图片（没有容器包裹的） */
+img {
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  max-width: 100%;
+  height: auto;
+}
+
+img:hover {
+  transform: scale(1.01);
+}
+
+/* Tab系统重新设计 - 更简洁美观 */
+.tabs.is-centered {
+  margin-bottom: 0.3rem;
+}
+
+.tabs.is-boxed {
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.tabs.is-boxed ul {
+  border: none;
+  gap: 0.5rem;
+  justify-content: center;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 0.3rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8e8e8;
+}
+
+.tabs.is-boxed li {
+  margin: 0;
+}
+
+.tabs.is-boxed a {
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #5a6c7d;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.tabs.is-boxed a:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.tabs.is-boxed li.is-active a {
+  background: #667eea;
+  color: white;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* Tab内容区域重新设计 */
+.tab-content {
+  background: transparent;
+  padding: 0.1rem 0 0;
+  border: none;
+  border-radius: 0;
+}
+
+/* Results section整体容器简化 */
+.results-section {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin: 0.5rem 0;
+  border: none;
+}
+
+/* Results section中的tabs和内容区域间距调整 */
+.results-section .tabs.is-centered {
+  margin-bottom: 0.2rem;
+}
+
+.results-section .tab-content {
+  padding: 0;
+  margin-top: 0.3rem;
+}
+
+.results-section .figure-container {
+  margin: 0.8rem auto;
+}
+
+/* Results section中的提示文字区域间距调整 */
+.results-section .has-text-centered[style*="margin-bottom"] {
+  margin-bottom: 0.5rem !important;
+}
+
+/* Method section的通用图片间距调整 - 除了Results部分外都使用紧凑间距 */
+.section .columns .column .figure-container {
+  margin: 0.8rem auto;
+}
+
+/* Results section保持原有样式，覆盖上面的通用样式 */
+.results-section .figure-container {
+  margin: 0.8rem auto;
+}
+
+/* Method section中两个图片之间的br标签间距调整 */
+.section .columns .column .has-text-centered br {
+  line-height: 1;
+  margin: 0.3rem 0;
+  display: block;
+}
+
+/* 列表样式简化 */
+.content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.content ul li {
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.content ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-weight: bold;
+}
+
+/* 特殊处理嵌套列表 */
+.content ul ul li::before {
+  content: '◦';
+  color: #5a6c7d;
+}
+
+/* 确保tabs中的ul不受影响 */
+.tabs ul {
+  list-style: none !important;
+}
+
+.tabs ul li {
+  margin-bottom: 0 !important;
+  padding-left: 0 !important;
+}
+
+.tabs ul li::before {
+  display: none !important;
+}
+
+/* 重置ul的默认样式，避免双重点号 */
+.content ul li {
+  list-style: none;
+}
+
+/* Code标签简化 */
+code {
+  background: #f1f3f4;
+  color: #2c3e50;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  border: 1px solid #e1e5e9;
+}
+
+/* BibTeX区域重新设计，与整体风格统一 */
+#BibTeX {
+  background: white;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+#BibTeX::before {
+  display: none;
+}
+
+#BibTeX .title {
+  color: #2c3e50;
+}
+
+#BibTeX pre {
+  background: #f8f9fa;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  color: #2c3e50;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+
+#BibTeX code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+/* 容器优化 */
+.container.is-max-desktop {
+  max-width: 1500px !important;
+}
+
+/* 响应式优化 */
+@media screen and (max-width: 768px) {
+  .section {
+    padding: 2rem 0;
+  }
+  
+  .title.is-3::after {
+    width: 30px;
+  }
+  
+  .figure-container {
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    border-radius: 12px;
+  }
+  
+  .figure-caption {
+    padding: 0.8rem 0;
+    font-size: 0.85rem;
+  }
+  
+  img[style*="150%"] {
+    width: 100% !important;
+  }
+  
+  .tabs.is-boxed ul {
+    padding: 0.2rem;
+  }
+  
+  .tabs.is-boxed a {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .figure-caption {
+    max-width: 95%;
+    font-size: 0.85rem;
+  }
+}
+
+/* 移除所有不需要的复杂效果 */
+.section:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.content:hover {
+  box-shadow: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+.results-section .tabs {
+  max-width: 900px;
+  margin: 0 auto 1em auto;
+}
+
+/* 如果您想分别控制每个部分的字体大小，可以使用下面的样式。 */
+/* 取消注释并修改数值即可。 */
+/*
+.abstract-section .content {
+  font-size: 18px;
+}
+
+.tldr-card .content ul {
+  font-size: 17px;
+}
+
+.conclusion-section .content {
+  font-size: 18px;
+}
+*/
